@@ -15,4 +15,23 @@ class CustomAuthController extends Controller
     {
         return view("auth.registration");
     }
+public function registerUser(Request $request)
+{
+    $request->validate([
+        'username' => 'required',
+        'email' => 'required',
+        'password' => 'required'
+    ]);
+    $user = new User();
+    $user->username = $request->username;
+    $user->email = $request->email;
+    $user->password = $request->password;
+    $res = $user->save();
+    if($res){
+        return back()->with('success', 'You have registered successfully.');
+} else{
+    return back()->with('fail', 'Something went wrong.');
+}
+
+}
 }
